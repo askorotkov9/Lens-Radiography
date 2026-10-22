@@ -149,7 +149,7 @@ class ParabolaAnalyzer:
         tk.Label(self.side_panel, text="Calculated Delta X (um):", fg="white", bg="#34495e", font=("Arial", 11)).pack()
         self.delta_label = tk.Label(self.side_panel, text="---", fg="#40e0d0", bg="#34495e", font=("Arial", 30, "bold"))
         self.delta_label.pack()
-        tk.Label(self.side_panel, text="Apex gap along axis (um):", fg="white", bg="#34495e", font=("Arial", 10)).pack()
+        tk.Label(self.side_panel, text="Visible apex gap G (um):", fg="white", bg="#34495e", font=("Arial", 10)).pack()
         self.gap_label = tk.Label(self.side_panel, text="---", fg="#40e0d0", bg="#34495e", font=("Arial", 16, "bold"))
         self.gap_label.pack()
 
@@ -506,21 +506,12 @@ class ParabolaAnalyzer:
         lines += [
             f"θ = {theta:g}°,  s = {r['sign']:+d}" + ("  (auto)" if sign is None else ""),
             "",
-            "Lateral axis offset (um)",
-            f"  Δx (0°)            = {r['dx']:+.3f}",
-            f"  Δy (90°)           = {r['dy']:+.3f}",
-            f"  e = √(Δx²+Δy²)     = {r['e']:.3f}",
+            f"Web, apex-to-apex along axis Δz = {r['dz']:.2f} um",
+            f"  check: 0° vs 90° mismatch      {r['dz0'] - r['dz90']:+.2f} um",
             "",
-            "Along the axis (um)",
-            f"  Δz apex gap        = {r['dz']:.3f}",
-            f"    from 0° / 90°    = {r['dz0']:.3f} / {r['dz90']:.3f}",
-            f"    mismatch         = {r['dz0'] - r['dz90']:+.3f}",
-            f"  d_min web          = {r['d_min']:.3f}",
-            f"  D apex-apex (3D)   = {r['D']:.3f}",
+            f"Axis misalignment e = {r['e']:.2f} um  (Δx {r['dx']:+.2f}, Δy {r['dy']:+.2f})",
             "",
-            "Radii, corrected R = R'·cosθ (um)",
-            f"  R up    = {r['R_up']:.3f}   (0°: {r['R_up_0']:.3f}, 90°: {r['R_up_90']:.3f})",
-            f"  R down  = {r['R_down']:.3f}   (0°: {r['R_down_0']:.3f}, 90°: {r['R_down_90']:.3f})",
+            f"R up = {r['R_up']:.2f} um,  R down = {r['R_down']:.2f} um",
         ]
         self.show_3d_text("\n".join(lines))
 
